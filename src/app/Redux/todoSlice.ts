@@ -15,12 +15,18 @@ const initialState: TodoState = {
 };
 
 function loadTodosFromLocalStorage(): Todo[] {
-  const storedTodos = localStorage.getItem('todos');
-  return storedTodos ? JSON.parse(storedTodos) : [];
+  if (typeof localStorage !== 'undefined') {
+    const storedTodos = localStorage.getItem('todos');
+    return storedTodos ? JSON.parse(storedTodos) : [];
+  } else {
+    return [];
+  }
 }
 
 function saveTodosToLocalStorage(todos: Todo[]): void {
-  localStorage.setItem('todos', JSON.stringify(todos));
+  if (typeof localStorage !== 'undefined') {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }
 }
 
 const todoSlice = createSlice({
